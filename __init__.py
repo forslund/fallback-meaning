@@ -1,0 +1,44 @@
+from mycroft.skills.core import FallbackSkill
+
+
+class MeaningFallback(FallbackSkill):
+    """
+        A Fallback skill to answer the question about the
+        meaning of life, the universe and everything.
+    """
+    def __init__(self):
+        super(MeaningFallback, self).__init__(name='Meaning Fallback')
+
+    def initialize(self):
+        """
+            Registers the fallback skill
+        """
+        self.register_fallback(self.handle_fallback, 10)
+        # Any other initialize code goes here
+
+    def handle_fallback(self, message):
+        """
+            Answers question about the meaning of life, the universe
+            and everything.
+        """
+        utterance = message.data.get("utterance")
+        if 'what' in utterance \
+            and 'meaning' in utterance \
+            and ('life' in utterance \
+                or 'universe' in utterance \
+                or 'everything'in utterance):
+            self.speak('42')
+            return True # Indicate that the utterance was handled
+        else:
+            return False
+
+    def shutdown(self):
+        """
+            Remove this skill from list of fallback skills.
+        """
+        self.remove_fallback(self.handle_fallback)
+        super(MeaningFallback, self).shutdown()
+
+
+def create_skill():
+    return MeaningFallback()
