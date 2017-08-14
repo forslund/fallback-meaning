@@ -13,7 +13,7 @@ class MeaningFallback(FallbackSkill):
         """
             Registers the fallback skill
         """
-        self.register_fallback(self.handle_fallback, 10)
+        self.register_fallback(self.handle_fallback, 1)
         # Any other initialize code goes here
 
     def handle_fallback(self, message):
