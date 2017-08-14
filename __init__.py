@@ -22,11 +22,19 @@ class MeaningFallback(FallbackSkill):
             and everything.
         """
         utterance = message.data.get("utterance")
-        if 'what' in utterance \
-            and 'meaning' in utterance \
-            and ('life' in utterance \
-                or 'universe' in utterance \
-                or 'everything'in utterance):
+
+        # get keywords for current language
+        what = self.dialog_renderer.render('query')
+        meaning = self.dialog_renderer.render('meaning')
+        life = self.dialog_renderer.render('life')
+        universe = self.dialog_renderer.render('universe')
+        everything = self.dialog_renderer.render('everything')
+
+        if what in utterance \
+            and meaning in utterance \
+            and (life in utterance \
+                or universe in utterance \
+                or everything in utterance):
             self.speak('42')
             return True # Indicate that the utterance was handled
         else:
